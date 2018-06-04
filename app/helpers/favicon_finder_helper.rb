@@ -1,0 +1,2 @@
+module FaviconFinderHelper
+end
