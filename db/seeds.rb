@@ -11,5 +11,7 @@ csv.each do |row|
 		url = 'http://' + row.last
 	end
 
+	# Allows me to seed in a resonable amount of time,
+	# urls without the root will get updated to correct path after a week if/when they are searched.
 	Url.create(url: url, fav_url: url + '/favicon.ico')
 end
