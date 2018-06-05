@@ -5,6 +5,7 @@ csv = CSV.parse(csv_text, headers: false, encoding: 'ISO-8859-1')
 urls = []
 failed = []
 csv.each do |row|
+	next if Url.where("url LIKE '%#{row.last}%'").any?
 	begin
 		url = URI::HTTP.build({ host: row.last }).to_s
 	rescue
