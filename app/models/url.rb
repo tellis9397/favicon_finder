@@ -60,7 +60,7 @@ class Url < ApplicationRecord
 		begin
 			response = HTTParty.get(url)
 		rescue
-			response = 0
+			return nil
 		end
 
 		response.code == 200 ? response : nil
@@ -80,7 +80,6 @@ class Url < ApplicationRecord
 				# No favicon found in response so we'll try at the root
 				return '/favicon.ico'
 			end
-
 		# Fails on sites with chinese characters due to ruby bug, so we'll just try the root for now
 		rescue ArgumentError
 			return '/favicon.ico'
