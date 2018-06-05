@@ -11,5 +11,8 @@ csv.each do |row|
 		url = 'http://' + row.last
 	end
 
-	Url.create(url: url, fav_url: url + '/favicon.ico')
+	web_response = Url.is_url(url)
+	favicon_path = Url.get_favicon_string(web_response.to_s, base_url)
+
+	Url.create(url: url, fav_url: url + favicon_path)
 end
