@@ -70,13 +70,19 @@ class Url < ApplicationRecord
 	# <link rel=\"icon\" href=\"http://example.com/favicon.ico\" sizes=\"32x32\"/>
 	# I'll need to break down the string to get the favicon route and return
 	def self.get_favicon_string(response_string, url)
-		# Check if the response contains the favicon info
-		if response_string.include?("<link rel=\"icon\"")
-			favicon_string = response_string.split("<link rel=\"icon\"").last
-		elsif response_string.include?("<link rel=\"shortcut icon\"")
-			favicon_string = response_string.split("<link rel=\"shortcut icon\"").last
-		else
-			# No favicon found in response so we'll try at the root
+		begin
+			# Check if the response contains the favicon info
+			if response_string.include?("<link rel=\"icon\"")
+				favicon_string = response_string.split("<link rel=\"icon\"").last
+			elsif response_string.include?("<link rel=\"shortcut icon\"")
+				favicon_string = response_string.split("<link rel=\"shortcut icon\"").last
+			else
+				# No favicon found in response so we'll try at the root
+				return '/favicon.ico'
+			end
+
+		# Fails on sites with chinese characters due to ruby bug, so we'll just try the root for now
+		rescue ArgumentError
 			return '/favicon.ico'
 		end
 		# Breaking down the string until it's just the favicon link
