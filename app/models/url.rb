@@ -12,7 +12,12 @@ class Url < ApplicationRecord
 		if url_record.any?
 			return url_record.first.fav_url
 		else
-			http_url = URI::HTTP.build({ host: base_url }).to_s
+			# URI doesn't accept underscores so we'll just try the hacky solution
+			if base_url.include?('_')
+				http_url = 'http://' + base_url
+			else
+				http_url = URI::HTTP.build({ host: base_url }).to_s
+			end
 
 			# Add to DB if url exists and return
 			if (self.is_url(http_url))
