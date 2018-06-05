@@ -1,13 +1,14 @@
 <h1>Favicon Finder</h1>
-<%= render 'shared/error_messages' if @url %>
+<%= render 'error_messages' if @url %>
 <%= form_tag(root_path, method: 'get') do %>
   <%= text_field_tag(:search, params[:search], placeholder: 'Enter URL') %>
-  Get fresh favicon?<%= check_box_tag(:get_fresh)%>
   <%= submit_tag('Find Favicon') %>
 <% end %>
 
-<% if @url && @url.fav_url %>
-	<%= image_tag(@url.fav_url) %>
-<% elsif @has_searched && @url%>
-	<%= 'No favicon found!' %>
+<% if @favicon%>
+	<!-- Should get newest favicon each time -->
+	<%= image_tag(@favicon) %>
+<% elsif @has_searched %>
+	<!-- Probably invalid url -->
+	<%= "No favicon found for given input" %>
 <% end %>
