@@ -13,6 +13,7 @@ csv.each do |row|
 	end
 
 	web_response = Url.is_url(url)
+	next if web_response.nil?
 	favicon_path = Url.get_favicon_string(web_response.to_s, row.last)
 
 	Url.create(url: url, fav_url: url + favicon_path)
