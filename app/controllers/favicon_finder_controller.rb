@@ -6,7 +6,6 @@ class FaviconFinderController < ApplicationController
 		# TODO maybe move all this logic to the url model
 		if params[:search]
 			@has_searched = true
-
 			@favicon = Url.get_favicon(params[:search])
 		end
 	end

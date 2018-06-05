@@ -22,7 +22,7 @@ class Url < ApplicationRecord
 			# Add to DB if url exists and return
 			if (self.is_url(http_url))
 				ActiveRecord::Base.transaction do
-					Url.create(url: url, fav_url: url + '/favicon.ico').fav_url
+					Url.create(url: http_url, fav_url: http_url + '/favicon.ico').fav_url
 				end
 			else
 				nil
