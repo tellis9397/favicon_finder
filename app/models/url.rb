@@ -88,6 +88,7 @@ class Url < ApplicationRecord
 		favicon_string = favicon_string
 											.split('>').first
 											.split('href=').last
+											.gsub("'", '"') # (Some sites put their links in single quotes so let's make it consistant)
 											.split('"').second
 
 		# Some responses just contain a path from the host,
