@@ -63,7 +63,6 @@ class Url < ApplicationRecord
 		rescue
 			return nil
 		end
-
 		response.code == 200 ? response : nil
 	end
 

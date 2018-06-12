@@ -12,7 +12,18 @@ csv.each do |row|
 		url = 'http://' + row.last
 	end
 
-	# Allows me to seed in a resonable amount of time,
-	# urls without the root will get updated to correct path after a week if/when they are searched.
-	Url.create(url: url, fav_url: url + '/favicon.ico')
+
+	Thread.new do
+		Rails.application.executor.wrap do
+			web_response = Url.is_url(url_record.url)
+			unless web_response.nil?
+				favicon_url = Url.build_favicon_string(web_response.to_s, http_url, base_url)
+
+				# Add to DB if url exists and return
+				ActiveRecord::Base.transaction do
+					Url.create(url: url, fav_url: favicon_url)
+				end
+			end
+		end
+	end
 end
